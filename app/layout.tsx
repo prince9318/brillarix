@@ -1,4 +1,5 @@
 import "./globals.css";
+import styles from "./layout.module.css";
 import React, { Suspense } from "react";
 import Link from "next/link";
 import ThemeToggle from "../components/UI/ThemeToggle";
@@ -17,15 +18,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <header className="site-header">
-          <div className="container header-inner">
+        <header className={styles.siteHeader}>
+          <div className={`${styles.container} ${styles.headerInner}`}>
             {/* Logo linked to home page */}
-            <Link href="/" className="brand" style={{ textDecoration: "none" }}>
+            <Link
+              href="/"
+              className={styles.brand}
+              style={{ textDecoration: "none" }}
+            >
               Product Explorer
             </Link>
 
             {/* ThemeToggle is a client component that contains the search input + toggle */}
-            <div className="header-actions">
+            <div className={styles.headerActions}>
               <Suspense fallback={<div>Loading...</div>}>
                 <ThemeToggle />
               </Suspense>
@@ -33,10 +38,9 @@ export default function RootLayout({
           </div>
         </header>
 
-        <main className="container main">{children}</main>
-
-        <footer className="site-footer">
-          <div className="container">
+        <main className={`${styles.container} ${styles.main}`}>{children}</main>
+        <footer className={styles.siteFooter}>
+          <div className={styles.container}>
             © {new Date().getFullYear()} Product Explorer. All rights reserved.
           </div>
         </footer>

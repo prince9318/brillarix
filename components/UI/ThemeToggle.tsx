@@ -1,12 +1,11 @@
-// components/UI/ThemeToggle.tsx
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
 import { Search, X } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
+import styles from "./ThemeToggle.module.css";
 
 type Props = {
-  // optional: parent can pass a callback instead of using URL
   onSearch?: (q: string) => void;
 };
 
@@ -18,7 +17,7 @@ export default function ThemeToggle({ onSearch }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // initialize theme
+  // initialize theme from localStorage or prefers-color-scheme
   useEffect(() => {
     const saved =
       typeof window !== "undefined" ? localStorage.getItem("theme") : null;
@@ -30,7 +29,9 @@ export default function ThemeToggle({ onSearch }: Props) {
         ? "dark"
         : "light");
     setTheme(initial);
-    document.documentElement.setAttribute("data-theme", initial);
+    if (typeof document !== "undefined") {
+      document.documentElement.setAttribute("data-theme", initial);
+    }
   }, []);
 
   // initialize search from URL if present
@@ -42,8 +43,10 @@ export default function ThemeToggle({ onSearch }: Props) {
   function toggle() {
     const t = theme === "light" ? "dark" : "light";
     setTheme(t);
-    document.documentElement.setAttribute("data-theme", t);
-    localStorage.setItem("theme", t);
+    if (typeof document !== "undefined") {
+      document.documentElement.setAttribute("data-theme", t);
+      localStorage.setItem("theme", t);
+    }
   }
 
   function setUrlSearch(q: string) {
@@ -51,10 +54,14 @@ export default function ThemeToggle({ onSearch }: Props) {
       onSearch(q);
       return;
     }
-    // update URL without adding history entries
+
+    if (typeof window === "undefined") return;
+
     const url = new URL(window.location.href);
     if (q.trim()) url.searchParams.set("search", q.trim());
     else url.searchParams.delete("search");
+
+    // Replace without creating a new history entry
     router.replace(url.pathname + url.search);
   }
 
@@ -87,63 +94,33 @@ export default function ThemeToggle({ onSearch }: Props) {
   }
 
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          border: "1px solid rgba(0,0,0,0.08)",
-          borderRadius: 8,
-          padding: "6px 10px",
-          minWidth: 240,
-          background: "var(--card)",
-        }}
-      >
+    <div className={styles.wrapper}>
+      <div className={styles.searchBox}>
         <button
           onClick={onClickSearch}
           aria-label="Search"
-          style={{
-            background: "transparent",
-            border: "none",
-            padding: 0,
-            display: "flex",
-            alignItems: "center",
-            cursor: "pointer",
-          }}
+          className={styles.searchBtn}
+          type="button"
         >
           <Search size={16} style={{ color: "var(--muted)" }} />
         </button>
 
         <input
+          className={styles.input}
           type="text"
           placeholder="Search products..."
           value={search}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
-          style={{
-            border: "none",
-            outline: "none",
-            flex: 1,
-            fontSize: 14,
-            background: "transparent",
-            color: "var(--text)",
-            marginLeft: 8,
-          }}
+          aria-label="Search products"
         />
 
         {search ? (
           <button
             onClick={clearSearch}
             aria-label="Clear search"
-            style={{
-              background: "transparent",
-              border: "none",
-              padding: 0,
-              marginLeft: 6,
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-            }}
+            className={styles.clearBtn}
+            type="button"
           >
             <X size={16} style={{ color: "var(--muted)" }} />
           </button>
@@ -153,14 +130,8 @@ export default function ThemeToggle({ onSearch }: Props) {
       <button
         onClick={toggle}
         aria-label="Toggle theme"
-        style={{
-          padding: "8px 10px",
-          borderRadius: 10,
-          border: "1px solid rgba(0,0,0,0.06)",
-          background: "transparent",
-          cursor: "pointer",
-          fontSize: 16,
-        }}
+        className={styles.toggleBtn}
+        type="button"
       >
         {theme === "light" ? "🌙" : "☀️"}
       </button>

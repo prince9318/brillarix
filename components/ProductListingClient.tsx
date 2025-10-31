@@ -1,9 +1,11 @@
 // components/ProductListingClient.tsx
 "use client";
+
 import React, { useEffect, useMemo, useState } from "react";
 import { Product } from "../types/product";
 import Filters from "./Filters/Filters";
-import ProductGrid from "./ProductGrid/ProductGrid";
+import ViewToggle from "./UI/ViewToggle";
+import ProductCard from "./ProductCard/ProductCard";
 import { useSearchParams, useRouter } from "next/navigation";
 
 export default function ProductListingClient({
@@ -19,6 +21,9 @@ export default function ProductListingClient({
   const [sort, setSort] = useState<"default" | "asc" | "desc">("default");
   const [page, setPage] = useState<number>(1);
   const perPage = 9;
+
+  // view mode state (grid | list)
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
   // initialize search from URL (runs on mount and when URL changes)
   useEffect(() => {
@@ -110,12 +115,47 @@ export default function ProductListingClient({
 
       {/* Right listing */}
       <div>
-        <div style={{ marginBottom: 12, color: "var(--muted)" }}>
-          Showing <strong>{start}</strong>–<strong>{end}</strong> of{" "}
-          <strong>{total}</strong> products
+        {/* Header row: Title + View Toggle */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 12,
+            marginBottom: 12,
+          }}
+        >
+          <div style={{ marginBottom: 12, color: "var(--muted)" }}>
+            Showing <strong>{start}</strong>–<strong>{end}</strong> of{" "}
+            <strong>{total}</strong> products
+          </div>
+
+          <div>
+            {/* ViewToggle: uses initial + onChange API (the Tailwind version) */}
+            <ViewToggle initial={viewMode} onChange={(m) => setViewMode(m)} />
+          </div>
         </div>
 
-        <ProductGrid products={visible} />
+        {/* Product list: grid or stacked list */}
+        {viewMode === "grid" ? (
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+              gap: 18,
+            }}
+          >
+            {visible.map((p) => (
+              <ProductCard key={p.id} product={p} viewMode="grid" />
+            ))}
+          </div>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {visible.map((p) => (
+              <ProductCard key={p.id} product={p} viewMode="list" />
+            ))}
+          </div>
+        )}
 
         {/* Pagination */}
         <div
