@@ -1,5 +1,5 @@
 import "./globals.css";
-import React from "react";
+import React, { Suspense } from "react";
 import Link from "next/link";
 import ThemeToggle from "../components/UI/ThemeToggle";
 import { Metadata } from "next";
@@ -26,7 +26,9 @@ export default function RootLayout({
 
             {/* ThemeToggle is a client component that contains the search input + toggle */}
             <div className="header-actions">
-              <ThemeToggle />
+              <Suspense fallback={<div>Loading...</div>}>
+                <ThemeToggle />
+              </Suspense>
             </div>
           </div>
         </header>
