@@ -121,9 +121,7 @@ export default function ProductPage({ params }: Props) {
               </div>
             </div>
 
-            <button className="btn-primary">
-              Add to Cart - ${product.price.toFixed(2)}
-            </button>
+            <button className="btn-primary">Add to Cart</button>
             <button className="btn-outline">Add to Wishlist</button>
           </div>
 

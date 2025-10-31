@@ -1,4 +1,24 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Product Explorer
+
+A modern Next.js application that showcases products with features like search, filtering, sorting, and theme switching.
+
+## Features
+
+- 🎨 Light/Dark theme support
+- 🔍 Real-time search functionality
+- 📑 Category filtering
+- 💰 Price sorting (ascending/descending)
+- 📱 Responsive design
+- ⚡ Server-side rendering with Next.js 13+ App Router
+- 🎯 Client-side pagination
+- 🔄 ISR (Incremental Static Regeneration) for data fetching
+
+## Tech Stack
+
+- [Next.js](https://nextjs.org/) - React framework with App Router
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [CSS Modules](https://github.com/css-modules/css-modules) - Scoped styling
+- [Fake Store API](https://fakestoreapi.com/) - Product data
 
 ## Getting Started
 
@@ -16,21 +36,55 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+my-product-explorer/
+├── app/                   # Next.js 13+ App Router pages
+│   ├── layout.tsx        # Root layout
+│   ├── page.tsx          # Home page
+│   └── product/
+│       └── [id]/         # Dynamic product pages
+├── components/           # React components
+│   ├── Filters/         # Search and filtering components
+│   ├── ProductCard/     # Product card component
+│   ├── ProductGrid/     # Grid layout for products
+│   └── UI/              # Common UI components
+├── public/              # Static assets
+└── types/               # TypeScript type definitions
+```
 
-## Learn More
+## Features in Detail
 
-To learn more about Next.js, take a look at the following resources:
+### Theme Switching
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Automatically detects system preference
+- Manually toggle between light/dark themes
+- Persists selection in localStorage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Search and Filtering
 
-## Deploy on Vercel
+- Real-time search with URL synchronization
+- Category-based filtering
+- Price-based sorting (low to high, high to low)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Pagination
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Client-side implementation
+- Smooth scroll to top on page change
+- Responsive design for mobile
+
+## Performance Optimization
+
+- Server-side rendering for initial page load
+- Incremental Static Regeneration for data updates
+- Client-side search and filtering for instant feedback
+- Suspense boundaries for improved loading states
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
