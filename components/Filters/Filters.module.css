@@ -150,6 +150,9 @@
 
 /* Responsive adjustments */
 @media (max-width: 480px) {
+  .top {
+    margin-top: 15px; /* Adds 10px space from top on mobile */
+  }
   .designerBadge {
     padding: 6px 12px 6px 10px;
     gap: 10px;
