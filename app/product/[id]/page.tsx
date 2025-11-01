@@ -49,7 +49,8 @@ export default function ProductPage({ params }: Props) {
   const increaseQuantity = () => setQuantity((q) => Math.min(99, q + 1));
 
   return (
-    <div className="w-full lg:w-290 mx-auto bg-slate-50 dark:bg-slate-900">
+    // Important: add a base text color so children inherit and remain visible in dark mode
+    <div className="w-full lg:w-290 mx-auto bg-slate-50 dark:bg-slate-900 pt-15 sm:pt-0 text-slate-900 dark:text-slate-100">
       {/* Header */}
       <header className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-3 sm:gap-4 min-w-0">
@@ -150,36 +151,37 @@ export default function ProductPage({ params }: Props) {
 
             {/* Description */}
             <div className="prose prose-sm sm:prose md:prose-lg dark:prose-invert text-slate-600 dark:text-slate-300">
-              <h3 className="text-base sm:text-lg text-slate-800 dark:text-slate-200">
-                Description
-              </h3>
+              <h3 className="text-base sm:text-lg leading-snug">Description</h3>
               <p className="mt-1">{product.description}</p>
             </div>
 
-            {/* Purchase Card */}
+            {/* Purchase Card (replace this entire block) */}
             <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-4 sm:p-5">
               <div className="flex flex-wrap items-center justify-between gap-4">
                 {/* Quantity */}
                 <div>
-                  <div className="text-sm sm:text-base font-medium text-slate-700 dark:text-slate-300 mb-2">
+                  <div className="text-sm sm:text-base font-medium text-slate-900 dark:text-slate-100 mb-2">
                     Quantity
                   </div>
 
                   <div className="flex items-center gap-2 sm:gap-3">
                     <button
                       onClick={decreaseQuantity}
-                      className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition"
+                      className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800 transition"
+                      aria-label="decrease quantity"
                     >
                       −
                     </button>
 
+                    {/* make number explicit contrast and set min width with arbitrary value */}
                     <div className="min-w-8 sm:min-w-9 text-center font-semibold text-slate-900 dark:text-slate-100">
                       {quantity}
                     </div>
 
                     <button
                       onClick={increaseQuantity}
-                      className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition"
+                      className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800 transition"
+                      aria-label="increase quantity"
                     >
                       +
                     </button>
@@ -191,7 +193,7 @@ export default function ProductPage({ params }: Props) {
                   <div className="text-sm text-green-600 dark:text-green-400 font-semibold">
                     In Stock
                   </div>
-                  <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                  <div className="text-xs text-slate-700 dark:text-slate-300 mt-1">
                     15 available
                   </div>
                 </div>
@@ -199,7 +201,6 @@ export default function ProductPage({ params }: Props) {
 
               {/* Buttons */}
               <div className="mt-4 space-y-3">
-                {/* ✅ Updated Add to Cart Button */}
                 <button
                   onClick={() => alert(`Added ${quantity} item(s) to cart`)}
                   className="w-full bg-[#2563eb] hover:bg-[#1e50c3] text-white font-medium py-3 rounded-lg transition duration-150 ease-in-out shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-1 text-sm sm:text-base"
@@ -209,7 +210,7 @@ export default function ProductPage({ params }: Props) {
 
                 <button
                   onClick={() => alert("Added to wishlist")}
-                  className="w-full flex items-center justify-center gap-2 sm:gap-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 py-2.5 sm:py-3 px-3 sm:px-4 font-medium hover:bg-slate-50 dark:hover:bg-slate-700 hover:shadow-sm transform hover:-translate-y-0.5 transition duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-300"
+                  className="w-full flex items-center justify-center gap-2 sm:gap-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 py-2.5 sm:py-3 px-3 sm:px-4 font-medium hover:bg-slate-50 dark:hover:bg-slate-700 hover:shadow-sm transform hover:-translate-y-0.5 transition duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-300"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
