@@ -1,3 +1,4 @@
+// app/layout.tsx
 import "./globals.css";
 import styles from "./layout.module.css";
 import React, { Suspense } from "react";
@@ -10,6 +11,18 @@ export const metadata: Metadata = {
   description: "Product listing demo",
 };
 
+const setThemeScript = `
+(function () {
+  try {
+    var stored = localStorage.getItem('theme');
+    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var theme = stored ? stored : (prefersDark ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+    if (theme === 'dark') document.documentElement.classList.add('dark'); else document.documentElement.classList.remove('dark');
+  } catch (e) { /* ignore */ }
+})();
+`;
+
 export default function RootLayout({
   children,
 }: {
@@ -17,10 +30,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        {/* inline script runs before React hydrates to avoid flash */}
+        <script dangerouslySetInnerHTML={{ __html: setThemeScript }} />
+      </head>
       <body>
         <header className={styles.siteHeader}>
           <div className={`${styles.container} ${styles.headerInner}`}>
-            {/* Logo linked to home page */}
             <Link
               href="/"
               className={styles.brand}
@@ -29,7 +45,6 @@ export default function RootLayout({
               Product Explorer
             </Link>
 
-            {/* ThemeToggle is a client component that contains the search input + toggle */}
             <div className={styles.headerActions}>
               <Suspense fallback={<div>Loading...</div>}>
                 <ThemeToggle />
