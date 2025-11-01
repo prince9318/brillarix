@@ -1,4 +1,5 @@
-// components/ProductGrid/ProductGrid.tsx
+
+// productgrid code
 import styles from "./ProductGrid.module.css";
 import { Product } from "../../types/product";
 import ProductCard from "../ProductCard/ProductCard";
@@ -11,11 +12,7 @@ export default function ProductGrid({
   viewMode?: "grid" | "list";
 }) {
   return (
-    <div
-      className={styles.grid}
-      // you can optionally toggle a CSS class for list mode if you want:
-      data-view={viewMode}
-    >
+    <div className={styles.grid} data-view={viewMode}>
       {products.map((p) => (
         <ProductCard key={p.id} product={p} viewMode={viewMode} />
       ))}

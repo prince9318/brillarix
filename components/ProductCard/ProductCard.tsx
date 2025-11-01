@@ -1,3 +1,4 @@
+// productcard.tsx code
 "use client";
 
 import Image from "next/image";
@@ -25,7 +26,7 @@ export default function ProductCard({
   return (
     <article
       style={cardBg}
-      className={`rounded-xl overflow-hidden transition-shadow ${
+      className={`rounded-xl overflow-hidden transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg border border-transparent hover:border-(--primary) ${
         viewMode === "list" ? "shadow-sm" : "shadow"
       }`}
     >

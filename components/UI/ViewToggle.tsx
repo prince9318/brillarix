@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { LayoutGrid, List } from "lucide-react";
 
 type ViewMode = "grid" | "list";

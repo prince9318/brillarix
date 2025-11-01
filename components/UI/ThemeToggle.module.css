@@ -11,7 +11,7 @@
   display: flex;
   align-items: center;
   border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 8px;
+  border-radius: 14px;
   padding: 6px 10px;
   min-width: 240px;
   background: var(--card);
@@ -31,7 +31,7 @@
 
 /* input - fills available space */
 .input {
-  border: none;
+  border-radius: 8px;
   outline: none;
   flex: 1;
   font-size: 14px;
