@@ -31,6 +31,11 @@ export default function ThemeToggle({ onSearch }: Props) {
     setTheme(initial);
     if (typeof document !== "undefined") {
       document.documentElement.setAttribute("data-theme", initial);
+      if (initial === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
     }
   }, []);
 
@@ -45,6 +50,11 @@ export default function ThemeToggle({ onSearch }: Props) {
     setTheme(t);
     if (typeof document !== "undefined") {
       document.documentElement.setAttribute("data-theme", t);
+      if (t === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
       localStorage.setItem("theme", t);
     }
   }

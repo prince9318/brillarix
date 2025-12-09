@@ -29,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="light" suppressHydrationWarning>
       <head>
         {/* inline script runs before React hydrates to avoid flash */}
         <script dangerouslySetInnerHTML={{ __html: setThemeScript }} />

@@ -4,11 +4,6 @@ import ProductListingClient from "../components/ProductListingClient";
 import type { Product } from "../types/product";
 import Link from "next/link";
 
-export const metadata = {
-  title: "Product Explorer",
-  description: "Browse products fetched from Fake Store API",
-};
-
 async function fetchProducts(): Promise<Product[]> {
   // Server-side fetch with ISR-style revalidation
   const res = await fetch("https://fakestoreapi.com/products", {
