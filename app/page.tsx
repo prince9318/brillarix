@@ -5,14 +5,14 @@ import type { Product } from "../types/product";
 import Link from "next/link";
 
 async function fetchProducts(): Promise<Product[]> {
-  // Server-side fetch with ISR-style revalidation
-  const res = await fetch("https://fakestoreapi.com/products", {
+  // Call the internal API route that proxies the external API and provides a fallback.
+  // Using a relative path ensures server-side fetch targets the same deployment.
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/api/products`, {
     next: { revalidate: 60 },
   });
 
   if (!res.ok) {
-    // Throw a standard Error - we catch this in the page and render an error UI
-    throw new Error("Failed to fetch products from fakestoreapi");
+    throw new Error("Failed to fetch products from internal API");
   }
   const data = (await res.json()) as Product[];
   return data;
@@ -27,9 +27,7 @@ export default async function Page() {
     // Server-side error UI (static). This runs server-side so no client hooks here.
     return (
       <div style={{ padding: 40 }}>
-        <h1 style={{ fontSize: 20, marginBottom: 8 }}>
-          Failed to load products
-        </h1>
+        <h1 style={{ fontSize: 20, marginBottom: 8 }}>Failed to load products</h1>
         <p style={{ color: "var(--muted, #6b7280)", marginBottom: 16 }}>
           There was a problem fetching products from the API. Please check your
           network connection or try again later.
@@ -73,9 +71,7 @@ export default async function Page() {
       <Suspense
         fallback={
           <div style={{ padding: 28 }}>
-            <div style={{ color: "var(--muted, #6b7280)" }}>
-              Loading product listing…
-            </div>
+            <div style={{ color: "var(--muted, #6b7280)" }}>Loading product listing…</div>
           </div>
         }
       >
